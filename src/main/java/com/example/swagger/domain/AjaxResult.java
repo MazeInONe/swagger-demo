@@ -1,4 +1,4 @@
-package com.example.swagger;
+package com.example.swagger.domain;
 
 import lombok.Data;
 
@@ -10,14 +10,18 @@ import java.util.HashMap;
  */
 @Data
 public class AjaxResult extends HashMap<String, Object> implements Serializable {
-    public enum RESULT {
-        /** 成功*/
+    public enum Type {
+        /**
+         * 成功
+         */
         SUCCESS(0),
-        /** 失败*/
+        /**
+         * 失败
+         */
         FAILED(1);
         private final int value;
 
-        RESULT(int value) {
+        Type(int value) {
             this.value = value;
         }
 
@@ -33,12 +37,12 @@ public class AjaxResult extends HashMap<String, Object> implements Serializable 
     public AjaxResult() {
     }
 
-    public AjaxResult(RESULT result, String msg) {
+    public AjaxResult(Type result, String msg) {
         super.put(CODE_TAG, result.value);
         super.put(MSG_TAG, msg);
     }
 
-    public AjaxResult(RESULT result, String msg, Object data) {
+    public AjaxResult(Type result, String msg, Object data) {
         super.put(CODE_TAG, result.value);
         super.put(MSG_TAG, msg);
         if (data != null) {
@@ -52,7 +56,7 @@ public class AjaxResult extends HashMap<String, Object> implements Serializable 
     }
 
     public static AjaxResult success(String msg, Object data) {
-        return new AjaxResult(RESULT.SUCCESS, msg, data);
+        return new AjaxResult(Type.SUCCESS, msg, data);
     }
 
     public static AjaxResult success(String msg) {

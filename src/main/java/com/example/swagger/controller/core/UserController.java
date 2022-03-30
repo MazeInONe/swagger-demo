@@ -1,21 +1,18 @@
-package com.example.swagger.controller.user;
+package com.example.swagger.controller.core;
 
-import com.example.swagger.AjaxResult;
-import com.example.swagger.domain.user.User;
+import com.example.swagger.domain.AjaxResult;
+import com.example.swagger.domain.core.User;
 import com.example.swagger.repository.UserRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -56,5 +53,22 @@ public class UserController {
     @GetMapping("/swagger")
     public ModelAndView swagger(Model model) {
         return new ModelAndView("redirect:/swagger-ui.html");
+    }
+
+
+    @PostMapping("/user/add")
+    public AjaxResult insertUser(@RequestBody Map body) {
+        System.out.println(body);
+        User user = new User();
+        user.setEmail(String.valueOf(body.get("email")));
+        user.setName((String) body.get("name"));
+        user.setGroupId((Integer) body.get("group_id"));
+        user.setRoleId((Integer) body.get("role_id"));
+        user.setKeycloakId("qqqqqqqqqqqqqqqqqqq");
+        user.setNickName((String) body.get("nickname"));
+        user.setCreatedOn(new Date());
+        user.setUpdatedOn(new Date());
+        User save = userRepository.save(user);
+        return AjaxResult.success("操作成功", save);
     }
 }

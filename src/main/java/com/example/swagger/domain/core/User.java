@@ -1,19 +1,22 @@
-package com.example.swagger.domain.user;
+package com.example.swagger.domain.core;
 
 import com.example.swagger.domain.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
  * @author Malu
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-@Table(name = "user")
+@Table(name = "t_user")
 public class User extends BaseEntity implements Serializable {
 
     @Column(length = 128, nullable = false)

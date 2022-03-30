@@ -1,6 +1,6 @@
 package com.example.swagger;
 
-import com.example.swagger.domain.user.User;
+import com.example.swagger.domain.core.User;
 import com.example.swagger.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
