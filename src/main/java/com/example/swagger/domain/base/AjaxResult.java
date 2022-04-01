@@ -1,4 +1,4 @@
-package com.example.swagger.domain;
+package com.example.swagger.domain.base;
 
 import lombok.Data;
 

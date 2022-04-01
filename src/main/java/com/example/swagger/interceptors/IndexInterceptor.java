@@ -1,4 +1,4 @@
-package com.example.swagger.handlders;
+package com.example.swagger.interceptors;
 
 import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Malu
  */
-public class LoginHandler implements HandlerInterceptor {
+public class IndexInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         System.out.println("preHandle");

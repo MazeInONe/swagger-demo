@@ -1,6 +1,6 @@
 package com.example.swagger.config;
 
-import com.example.swagger.handlders.LoginHandler;
+import com.example.swagger.interceptors.IndexInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -33,7 +33,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry){
-        registry.addInterceptor(new LoginHandler()).addPathPatterns("/**");
+        registry.addInterceptor(new IndexInterceptor()).addPathPatterns("/**");
     }
 
     @Bean

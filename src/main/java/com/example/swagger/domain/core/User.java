@@ -1,12 +1,11 @@
 package com.example.swagger.domain.core;
 
-import com.example.swagger.domain.BaseEntity;
+import com.example.swagger.domain.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import java.io.Serializable;
 

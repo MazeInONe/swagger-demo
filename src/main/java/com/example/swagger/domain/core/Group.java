@@ -1,6 +1,6 @@
 package com.example.swagger.domain.core;
 
-import com.example.swagger.domain.BaseEntity;
+import com.example.swagger.domain.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

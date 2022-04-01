@@ -1,6 +1,6 @@
 package com.example.swagger.controller.core;
 
-import com.example.swagger.domain.AjaxResult;
+import com.example.swagger.domain.base.AjaxResult;
 import com.example.swagger.domain.core.User;
 import com.example.swagger.repository.UserRepository;
 import io.swagger.annotations.Api;
