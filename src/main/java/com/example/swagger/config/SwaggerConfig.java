@@ -31,10 +31,10 @@ public class SwaggerConfig implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry){
-        registry.addInterceptor(new IndexInterceptor()).addPathPatterns("/**");
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry){
+//        registry.addInterceptor(new IndexInterceptor()).addPathPatterns("/**");
+//    }
 
     @Bean
     public Docket createDocket() {

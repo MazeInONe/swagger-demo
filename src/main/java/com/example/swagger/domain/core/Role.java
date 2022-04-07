@@ -18,7 +18,7 @@ public class Role extends BaseEntity implements Serializable {
     private String name;
 
     @Column(columnDefinition = "varchar(128) comment '角色描述'")
-    private String desc;
+    private String description;
 
     @Column(nullable = false, columnDefinition = "int(1) default 0 comment '角色等级'")
     private Integer level;

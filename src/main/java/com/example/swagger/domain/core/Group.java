@@ -12,11 +12,11 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-@Table(name = "t_power")
+@Table(name = "t_group")
 public class Group extends BaseEntity implements Serializable {
     @Column(nullable = false, columnDefinition = "varchar(128) comment '组名称'")
     private String name;
 
     @Column(nullable = false, columnDefinition = "int(4) comment '父级组名称'")
-    private Integer parent_id;
+    private Integer parentId;
 }
