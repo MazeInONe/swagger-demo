@@ -1,6 +1,6 @@
 package com.example.swagger.config;
 
-import com.example.swagger.interceptors.IndexInterceptor;
+import com.example.swagger.interceptors.PreRequestInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -31,10 +31,10 @@ public class SwaggerConfig implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry){
-//        registry.addInterceptor(new IndexInterceptor()).addPathPatterns("/**");
-//    }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new PreRequestInterceptor()).addPathPatterns("/**").excludePathPatterns("/swagger", "/swagger-ui.html");
+    }
 
     @Bean
     public Docket createDocket() {

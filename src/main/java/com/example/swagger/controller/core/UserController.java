@@ -1,16 +1,16 @@
 package com.example.swagger.controller.core;
 
 import com.example.swagger.domain.base.AjaxResult;
+import com.example.swagger.domain.core.Role;
 import com.example.swagger.domain.core.User;
 import com.example.swagger.repository.UserRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -19,56 +19,74 @@ import java.util.Optional;
  * @author Malu
  */
 @RestController
+@RequestMapping("/admin")
 @Api(tags = "用户管理")
 public class UserController {
+
+    private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserRepository userRepository;
 
-    @ApiOperation(value = "获取所有用户", notes = "拿到所有用户的")
-    @GetMapping(value = "/user")
-    public List<User> gerUserList() {
-        System.out.println("gerUserList");
-        return userRepository.findAll();
+    @GetMapping(value = "/users")
+    @ApiOperation(value = "获取所有用户", notes = "获取所有用户")
+    public AjaxResult gerUserList() {
+        return AjaxResult.success(userRepository.findAll());
     }
 
-    @ApiOperation(value = "用户详情", notes = "拿到某个用户信息")
     @GetMapping(value = "/user/{userId}")
+    @ApiOperation(value = "用户详情", notes = "用户详情")
     public AjaxResult getUserById(@PathVariable(value = "userId") Integer userId) {
-        Optional<User> optional = userRepository.findById(userId);
-        if (optional.isPresent()) {
-            User user = optional.get();
-            return AjaxResult.success("操作成功", user);
-        }
-        return AjaxResult.success("操作成功");
+        Optional<User> user = userRepository.findById(userId);
+        return user.map(value -> AjaxResult.success(user)).orElseGet(AjaxResult::success);
     }
-
-    @ApiOperation(value = "多个用户", notes = "拿到某个用户信息")
-    @GetMapping(value = "/user/range")
-    public AjaxResult getUserById(@RequestParam(value = "start") Integer start, @RequestParam(value = "end") Integer end) {
-        List<User> list = userRepository.findUsersByRange(start, end);
-        return AjaxResult.success("操作成功", list);
-    }
-
-    @GetMapping("/swagger")
-    public ModelAndView swagger(Model model) {
-        return new ModelAndView("redirect:/swagger-ui.html");
-    }
-
 
     @PostMapping("/user/add")
-    public AjaxResult insertUser(@RequestBody Map body) {
-        System.out.println(body);
+    @ApiOperation(value = "增加用户", notes = "增加用户")
+    public AjaxResult insertUser(@RequestBody Map<String, Object> body) {
         User user = new User();
         user.setEmail(String.valueOf(body.get("email")));
         user.setName((String) body.get("name"));
         user.setGroupId((Integer) body.get("group_id"));
         user.setRoleId((Integer) body.get("role_id"));
-        user.setKeycloakId("qqqqqqqqqqqqqqqqqqq");
+        user.setKeycloakId("test_id");
         user.setNickName((String) body.get("nickname"));
-        user.setCreatedOn(new Date());
-        user.setUpdatedOn(new Date());
-        User save = userRepository.save(user);
-        return AjaxResult.success("操作成功", save);
+        return AjaxResult.success(userRepository.save(user));
     }
+
+    @PutMapping("/user/update/{userId}")
+    @ApiOperation(value = "更新用户", notes = "更新用户")
+    public AjaxResult updateUser(@RequestBody Map<String, Object> body,
+                                 @PathVariable(value = "userId") Integer userId) {
+        Optional<User> user = userRepository.findById(userId);
+        try {
+            user.ifPresent(value -> {
+                value.setEmail(String.valueOf(body.get("email")));
+                value.setName((String) body.get("name"));
+                value.setGroupId((Integer) body.get("group_id"));
+                value.setRoleId((Integer) body.get("role_id"));
+                value.setKeycloakId("test_id");
+                value.setNickName((String) body.get("nickname"));
+            });
+            return AjaxResult.success(userRepository.save(user.get()));
+        } catch (Exception e) {
+            logger.error("更新用户{}失败", userId);
+        }
+        return AjaxResult.error();
+    }
+
+    @DeleteMapping("/user/delete/{userId}")
+    @ApiOperation(value = "删除用户", notes = "删除用户")
+    public AjaxResult deleteUser(@RequestParam(value = "userId") Integer userId) {
+        Optional<User> user = userRepository.findById(userId);
+        try {
+            user.ifPresent(value -> userRepository.delete(value));
+            return AjaxResult.success();
+        } catch (Exception e) {
+            logger.error("删除用户{}失败", userId);
+            e.printStackTrace();
+        }
+        return AjaxResult.error();
+    }
+
 }

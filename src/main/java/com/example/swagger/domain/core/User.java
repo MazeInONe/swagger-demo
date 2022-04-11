@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * @author Malu
@@ -17,6 +18,8 @@ import java.io.Serializable;
 @Entity
 @Table(name = "t_user")
 public class User extends BaseEntity implements Serializable {
+
+    private static final long serialVersionUID = 8673223947797271299L;
 
     @Column(length = 128, nullable = false)
     private String name;

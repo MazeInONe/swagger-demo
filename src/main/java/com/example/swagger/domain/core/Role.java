@@ -9,11 +9,18 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
 
+/**
+ * @author 51544
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "t_role")
+@org.hibernate.annotations.Table(appliesTo = "t_role",comment = "角色表")
 public class Role extends BaseEntity implements Serializable {
+
+    private static final long serialVersionUID = -1603245439828280281L;
+
     @Column(nullable = false, unique = true, columnDefinition = "varchar(128) comment '角色名称'")
     private String name;
 
