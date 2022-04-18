@@ -57,6 +57,7 @@ public class RoleController {
             role.ifPresent(value -> {
                 value.setName(String.valueOf(body.get("name")));
                 value.setDescription(String.valueOf(body.get("description")));
+                value.setLevel((Integer) body.get("level"));
             });
             return AjaxResult.success(roleRepository.save(role.get()));
         } catch (Exception e) {
@@ -66,7 +67,7 @@ public class RoleController {
         return AjaxResult.error();
     }
 
-    @PutMapping("/role/delete/{roleId}")
+    @DeleteMapping("/role/delete/{roleId}")
     @ApiOperation(value = "删除角色", notes = "删除角色")
     public AjaxResult deleteRole(@PathVariable(value = "roleId") Integer roleId) {
         Optional<Role> role = roleRepository.findById(roleId);

@@ -3,6 +3,7 @@ package com.example.swagger.config;
 import com.example.swagger.interceptors.PreRequestInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -18,6 +19,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @author Malu
  */
 @Configuration
+@EnableWebMvc
 @EnableSwagger2
 public class SwaggerConfig implements WebMvcConfigurer {
 
@@ -48,9 +50,9 @@ public class SwaggerConfig implements WebMvcConfigurer {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Swagger-demo")
-                .description("swagger测试demo")
-                .termsOfServiceUrl("")
+                .title("源码门禁平台系统")
+                .description("源码门禁平台系统，用于软件管理<开源软件、第三方、自研>、权限管理、规则检测等功能")
+                .termsOfServiceUrl("https://github.com/MazeInONe")
                 .version("1.0")
                 .build();
     }

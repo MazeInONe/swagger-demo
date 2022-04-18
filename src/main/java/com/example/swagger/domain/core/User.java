@@ -4,11 +4,8 @@ import com.example.swagger.domain.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Map;
 
 /**
  * @author Malu
@@ -27,14 +24,16 @@ public class User extends BaseEntity implements Serializable {
     @Column(name = "nick_name", length = 128)
     private String nickName;
 
-    @Column(name = "keycloak_id", length = 64, nullable = false)
+    @Column(name = "keycloak_id", length = 64)
     private String keycloakId;
 
-    @Column(name = "group_id", length = 32, nullable = false)
-    private Integer groupId;
+    @ManyToOne
+    @JoinColumn(name = "group_id")
+    private Group group;
 
-    @Column(name = "role_id", length = 32, nullable = false)
-    private Integer roleId;
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 
     @Column(length = 32)
     private String email;

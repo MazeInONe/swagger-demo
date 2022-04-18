@@ -3,6 +3,8 @@ package com.example.swagger.controller.core;
 import com.example.swagger.domain.base.AjaxResult;
 import com.example.swagger.domain.core.Role;
 import com.example.swagger.domain.core.User;
+import com.example.swagger.repository.GroupRepository;
+import com.example.swagger.repository.RoleRepository;
 import com.example.swagger.repository.UserRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,6 +30,13 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private GroupRepository groupRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
+
+
     @GetMapping(value = "/users")
     @ApiOperation(value = "获取所有用户", notes = "获取所有用户")
     public AjaxResult gerUserList() {
@@ -47,9 +56,8 @@ public class UserController {
         User user = new User();
         user.setEmail(String.valueOf(body.get("email")));
         user.setName((String) body.get("name"));
-        user.setGroupId((Integer) body.get("group_id"));
-        user.setRoleId((Integer) body.get("role_id"));
-        user.setKeycloakId("test_id");
+        user.setGroup(groupRepository.getById((Integer) body.get("group_id")));
+        user.setRole(roleRepository.getById((Integer) body.get("role_id")));
         user.setNickName((String) body.get("nickname"));
         return AjaxResult.success(userRepository.save(user));
     }
@@ -63,8 +71,8 @@ public class UserController {
             user.ifPresent(value -> {
                 value.setEmail(String.valueOf(body.get("email")));
                 value.setName((String) body.get("name"));
-                value.setGroupId((Integer) body.get("group_id"));
-                value.setRoleId((Integer) body.get("role_id"));
+                value.setGroup(groupRepository.getById((Integer) body.get("group_id")));
+                value.setRole(roleRepository.getById((Integer) body.get("role_id")));
                 value.setKeycloakId("test_id");
                 value.setNickName((String) body.get("nickname"));
             });
